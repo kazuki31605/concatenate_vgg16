@@ -1,5 +1,5 @@
 from keras.applications.vgg16 import VGG16
-from keras.layers import Dense, GlobalAveragePooling2D, merge
+from keras.layers import Dense, GlobalAveragePooling2D, Dropout
 from keras.models import Sequential, Model
 import glob
 import numpy as np
@@ -20,6 +20,7 @@ def vgg16(input_img):
 
     nn = cnn.output
     nn = GlobalAveragePooling2D(name="xcp_gap2d_bark")(nn)
-    nn = Dense(256, activation='relu', name='xcp_dense_relu_bark')(nn)
+    nn = Dense(4096, activation='relu', name='xcp_dense_relu_bark')(nn)
+    nn = Dropout(0.5)(nn)
     return nn
 
